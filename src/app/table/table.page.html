@@ -5,5 +5,55 @@
 </ion-header>
 
 <ion-content>
+  <ion-grid>
+    <ion-row>
+        <ion-card size-sm = 5>
+          <ion-card-title>
+            BreakFast
+          </ion-card-title>
+          <ion-card-content>
+            <ion-list>
+              <ion-item  *ngFor = "let it of getChoosedFood()" button = true>
+                <ion-label>{{it.id}}</ion-label>
+                <ion-label>{{it.calories}}</ion-label>
+                <ion-label>{{it.carbohydrates}}</ion-label>
+                <ion-label>{{it.fat}}</ion-label>
+                <ion-label>{{it.protein}}</ion-label>
+                <ion-label>{{it.sodium}}</ion-label>
+                <ion-label>{{it.sugar}}</ion-label>
+              </ion-item>
+            </ion-list>
+
+          </ion-card-content>
+        </ion-card>
+    </ion-row>
+
+  </ion-grid>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Menu</ion-card-title>
+      <ion-card-subtitle>
+        Calories,
+        carbohydrates,
+        fat,
+        protein,
+        sodium,
+        sugar</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list>
+        <ion-item  *ngFor = "let it of getVectorCopy()" button = true (click) = "addFood(it.id)">
+          <ion-label>{{it.id}}</ion-label>
+          <ion-label>{{it.calories}}</ion-label>
+          <ion-label>{{it.carbohydrates}}</ion-label>
+          <ion-label>{{it.fat}}</ion-label>
+          <ion-label>{{it.protein}}</ion-label>
+          <ion-label>{{it.sodium}}</ion-label>
+          <ion-label>{{it.sugar}}</ion-label>
+        </ion-item>
+      </ion-list>
+
+    </ion-card-content>
+  </ion-card>
 
 </ion-content>
