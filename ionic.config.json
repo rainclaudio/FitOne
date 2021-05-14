@@ -1,0 +1,7 @@
+{
+  "name": "FitOne",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
