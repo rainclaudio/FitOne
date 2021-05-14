@@ -11,6 +11,10 @@ const routes: Routes = [
     redirectTo: 'home',
     pathMatch: 'full'
   },
+  {
+    path: 'table',
+    loadChildren: () => import('./table/table.module').then( m => m.TablePageModule)
+  },
 ];
 
 @NgModule({
