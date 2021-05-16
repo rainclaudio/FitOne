@@ -29,7 +29,8 @@
                 <ion-label>{{it.sugar}}</ion-label>
               </ion-item>
             </ion-list>
-            <ion-button slot="icon-only">
+
+            <ion-button slot="icon-only" id = brbutton  (click) = "displayOptions($event)">
               <ion-icon name="add"></ion-icon>
             </ion-button>
 
@@ -55,7 +56,7 @@
                 <ion-label>{{it.sugar}}</ion-label>
               </ion-item>
             </ion-list>
-            <ion-button slot="icon-only">
+          <ion-button slot="icon-only" id = lunchbutton (click) = "displayOptions($event)">
               <ion-icon name="add"></ion-icon>
             </ion-button>
           </ion-card-content>
@@ -82,7 +83,7 @@
                 <ion-label>{{it.sugar}}</ion-label>
               </ion-item>
             </ion-list>
-            <ion-button slot="icon-only">
+            <ion-button slot="icon-only" id = snacksbutton  (click) = "displayOptions($event)">
               <ion-icon name="add"></ion-icon>
             </ion-button>
           </ion-card-content>
@@ -107,7 +108,7 @@
                 <ion-label>{{it.sugar}}</ion-label>
               </ion-item>
             </ion-list>
-            <ion-button slot="icon-only">
+            <ion-button slot="icon-only" id = dinnerbutton (click) = "displayOptions($event)">
               <ion-icon name="add"></ion-icon>
             </ion-button>
           </ion-card-content>
@@ -123,21 +124,21 @@
       >
     </ion-card-header>
     <ion-card-content>
-      <!-- <ion-item>
+      <ion-item>
 
           <ion-select
             [(ngModel)]="foodSelector"
             [compareWith]="compareWith"
             multiple="true"
             (ionChange)="optionFind()"
-
+            #myselect
           >
             <ion-select-option *ngFor="let it of getVectorCopy()" [value]="it"
               >{{it.id}}</ion-select-option
             >
           </ion-select>
 
-        </ion-item> -->
+        </ion-item>
 
     </ion-card-content>
   </ion-card>

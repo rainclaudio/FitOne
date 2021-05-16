@@ -1,4 +1,5 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit, ViewChild} from '@angular/core';
+import { IonButton, IonSelect } from '@ionic/angular';
 import { foodNode } from './foodNode.model';
 import { TableService } from './table.service';
 
@@ -9,7 +10,10 @@ import { TableService } from './table.service';
 })
 export class TablePage implements OnInit {
   private copyFoodVector: foodNode[] = [];
-  private choosedFood: foodNode[] = [];
+  private choosedFood1: foodNode[] = [];
+  private choosedFood2: foodNode[] = [];
+  private choosedFood3: foodNode[] = [];
+  private choosedFood4: foodNode[] = [];
   private activeAddFood = true;
   counterCalories: number;
   foodSelector: foodNode[] = [];
@@ -19,7 +23,7 @@ export class TablePage implements OnInit {
   private counterSodium: number;
   private counterSugar: number;
 
-// @ViewChild('myselect') selectRef1: IonSelect;
+   @ViewChild('myselect') selectRef1: IonSelect;
 
   constructor(private tableservice: TableService) {}
 
@@ -30,14 +34,14 @@ export class TablePage implements OnInit {
     return [...this.copyFoodVector];
   }
   getChoosedFood() {
-    return [...this.choosedFood];
+    return [...this.choosedFood1];
   }
   addFoodItemButton(id: string){
     console.log("clicked " + id);
   }
   addFood(id: string) {
 
-    this.choosedFood.push(
+    this.choosedFood1.push(
       this.copyFoodVector.find((food) => {
         return food.id === id;
       })
@@ -54,7 +58,7 @@ export class TablePage implements OnInit {
 
       });
     }
-return o1.id === o2.id;
+    return o1.id === o2.id;
   }
   optionFind(){
     console.log("click");
@@ -64,5 +68,8 @@ return o1.id === o2.id;
     }
   }
 
-
+  displayOptions(event: any){
+    console.log(event.srcElement.id);
+    this.selectRef1.open();
+  }
 }
