@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { foodNode } from './foodNode.model';
 import { TableService } from './table.service';
 
@@ -18,6 +18,8 @@ export class TablePage implements OnInit {
   private counterFat: number;
   private counterSodium: number;
   private counterSugar: number;
+
+// @ViewChild('myselect') selectRef1: IonSelect;
 
   constructor(private tableservice: TableService) {}
 
@@ -61,5 +63,6 @@ return o1.id === o2.id;
       this.addFood(it.id);
     }
   }
+
 
 }

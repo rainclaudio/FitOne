@@ -32,6 +32,7 @@
             <ion-button slot="icon-only">
               <ion-icon name="add"></ion-icon>
             </ion-button>
+
           </ion-card-content>
         </ion-card>
       </ion-col>
@@ -122,22 +123,21 @@
       >
     </ion-card-header>
     <ion-card-content>
-      <ion-list>
-        <ion-item>
-          <ion-label>Select</ion-label>
+      <!-- <ion-item>
+
           <ion-select
             [(ngModel)]="foodSelector"
             [compareWith]="compareWith"
             multiple="true"
             (ionChange)="optionFind()"
+
           >
             <ion-select-option *ngFor="let it of getVectorCopy()" [value]="it"
               >{{it.id}}</ion-select-option
             >
           </ion-select>
-        </ion-item>
-      </ion-list>
 
+        </ion-item> -->
 
     </ion-card-content>
   </ion-card>
