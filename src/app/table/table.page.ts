@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild} from '@angular/core';
 import { IonButton, IonSelect } from '@ionic/angular';
-import { foodNode } from './foodNode.model';
+import { foodItem } from './foodItem.model';
 import { TableService } from './table.service';
 
 @Component({
@@ -9,14 +9,17 @@ import { TableService } from './table.service';
   styleUrls: ['./table.page.scss'],
 })
 export class TablePage implements OnInit {
-  private copyFoodVector: foodNode[] = [];
-  private choosedFood1: foodNode[] = [];
-  private choosedFood2: foodNode[] = [];
-  private choosedFood3: foodNode[] = [];
-  private choosedFood4: foodNode[] = [];
+  private copyFoodVector: foodItem[] = [];
+  private choosedFood1: foodItem[] = [];
+  private choosedFood2: foodItem[] = [];
+  private choosedFood3: foodItem[] = [];
+  private choosedFood4: foodItem[] = [];
   private activeAddFood = true;
   counterCalories: number;
-  foodSelector: foodNode[] = [];
+
+  foodSelector: foodItem[] = [];
+  private activemeal: string;
+
   private counterProtein: number;
   private counterCarbohydrates: number;
   private counterFat: number;
@@ -33,27 +36,62 @@ export class TablePage implements OnInit {
   getVectorCopy() {
     return [...this.copyFoodVector];
   }
-  getChoosedFood() {
+  getChoosedFood1() {
     return [...this.choosedFood1];
+  }
+  getChoosedFood2() {
+    return [...this.choosedFood2];
+  }
+  getChoosedFood3() {
+    return [...this.choosedFood3];
+  }
+  getChoosedFood4() {
+    return [...this.choosedFood4];
   }
   addFoodItemButton(id: string){
     console.log("clicked " + id);
   }
   addFood(id: string) {
+    switch(this.activemeal){
+      case"brbutton":
+        this.choosedFood1.push(
+          this.copyFoodVector.find((food) => {
+           return food.id === id;
+          })
+        );
+        break;
+      case "lunchbutton":
+        this.choosedFood2.push(
+          this.copyFoodVector.find((food) => {
+           return food.id === id;
+          })
+        );
+        break;
+      case "snacksbutton":
+        this.choosedFood3.push(
+          this.copyFoodVector.find((food) => {
+           return food.id === id;
+          })
+        );
+        break;
+      case "dinnerbutton":
+          this.choosedFood4.push(
+            this.copyFoodVector.find((food) => {
+             return food.id === id;
+            })
+          );
+      break;
 
-    this.choosedFood1.push(
-      this.copyFoodVector.find((food) => {
-        return food.id === id;
-      })
-    );
+    }
+
   }
-  compareWith(o1: foodNode, o2: foodNode | foodNode[]) {
+  compareWith(o1: foodItem, o2: foodItem | foodItem[]) {
     if (!o1 || !o2) {
       return o1 === o2;
     }
 
     if (Array.isArray(o2)) {
-      return o2.some((u: foodNode) =>{
+      return o2.some((u: foodItem) =>{
        u.id === o1.id
 
       });
@@ -69,7 +107,8 @@ export class TablePage implements OnInit {
   }
 
   displayOptions(event: any){
-    console.log(event.srcElement.id);
+    this.activemeal = event.srcElement.id;
+    console.log(this.activemeal);
     this.selectRef1.open();
   }
 }

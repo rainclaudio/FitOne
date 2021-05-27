@@ -11,6 +11,10 @@ const routes: Routes = [
     path: 'table',
     loadChildren: () => import('./table/table.module').then( m => m.TablePageModule)
   },
+  {
+    path: 'auth',
+    loadChildren: () => import('./auth/auth.module').then( m => m.AuthPageModule)
+  },
 ];
 
 @NgModule({

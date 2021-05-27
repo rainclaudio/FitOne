@@ -1,4 +1,4 @@
-export interface foodNode{
+export interface foodItem{
   id:string;
   calories: number;
   carbohydrates: number;

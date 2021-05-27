@@ -1,14 +1,14 @@
 import { analyzeAndValidateNgModules } from '@angular/compiler';
 import { Injectable } from '@angular/core';
-import { foodNode } from './foodNode.model';
+import { foodItem } from './foodItem.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TableService {
-  private var1: foodNode;
+  private var1: foodItem;
 
-  private foodVector: foodNode[] = [];
+  private foodVector: foodItem[] = [];
   create_food(
     id: string,
     calories: number,
