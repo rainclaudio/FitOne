@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>client Nutri page</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-content>
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-card size-sm="5">
+            <ion-card-title> Client List </ion-card-title>
+            <ion-card-content>
+              <ion-list>
+                <ion-item *ngFor="let it of getVectorCopy()" button="true">
+                  <ion-label>{{it.id}}</ion-label>
+                  <ion-label>{{it.nombres}}</ion-label>
+                  <ion-label>{{it.apellidos}}</ion-label>
+                </ion-item>
+              </ion-list>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+</ion-content>

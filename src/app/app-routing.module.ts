@@ -4,8 +4,12 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'table',
+    redirectTo: 'client-nutri',
     pathMatch: 'full'
+  },
+  {
+    path: 'client-nutri',
+    loadChildren: () => import('./client-nutri/client-nutri.module').then( m => m.ClientNutriPageModule)
   },
   {
     path: 'table',
@@ -14,6 +18,11 @@ const routes: Routes = [
   {
     path: 'auth',
     loadChildren: () => import('./auth/auth.module').then( m => m.AuthPageModule)
+  },
+
+  {
+    path: 'client-persona',
+    loadChildren: () => import('./client-persona/client-persona.module').then( m => m.ClientPersonaPageModule)
   },
 ];
 
