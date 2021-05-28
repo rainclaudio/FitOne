@@ -5,7 +5,6 @@
 </ion-header>
 
 <ion-content>
-
   <ion-content>
     <ion-grid>
       <ion-row>
@@ -14,15 +13,23 @@
             <ion-card-title> Client List </ion-card-title>
             <ion-card-content>
               <ion-list>
-                <ion-item *ngFor="let it of getVectorCopy()" button="true">
-                  <ion-label>{{it.id}}</ion-label>
+                <ion-item
+                  *ngFor="let it of getVectorCopy()"
+                  button="true"
+                  [routerLink]="['/','client-nutri','tabs',it.id_client]"
+                >
+                  <ion-label>{{it.id_client}}</ion-label>
                   <ion-label>{{it.nombres}}</ion-label>
                   <ion-label>{{it.apellidos}}</ion-label>
                 </ion-item>
               </ion-list>
+              <ion-button color = primary routerLink = "/client-nutri/tabs/new-client">
+                new Client
+              </ion-button>
             </ion-card-content>
           </ion-card>
         </ion-col>
       </ion-row>
     </ion-grid>
+  </ion-content>
 </ion-content>

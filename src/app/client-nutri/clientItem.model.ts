@@ -1,5 +1,5 @@
 export interface clientItem{
-  id:string;
+  id_client:string;
   nombres: string;
   apellidos: string;
   telefono: number;

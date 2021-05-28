@@ -7,7 +7,7 @@ import { clientItem } from './clientItem.model';
 export class ClientService {
   private clientVector: clientItem[] = [];
   create_client(
-    id: string,
+    id_client: string,
     nombres: string,
     apellidos: string,
     telefono: number,
@@ -15,7 +15,7 @@ export class ClientService {
     ocupacion: string
   ) {
     const cliente = {
-      id,
+      id_client,
       nombres,
       apellidos,
       telefono,
