@@ -16,14 +16,17 @@
                 <ion-item
                   *ngFor="let it of getVectorCopy()"
                   button="true"
-                  [routerLink]="['/','client-nutri','tabs',it.id_client]"
+                  [routerLink]="['/','client-nutri','tabs','client-detail',it.id_client]"
                 >
                   <ion-label>{{it.id_client}}</ion-label>
                   <ion-label>{{it.nombres}}</ion-label>
                   <ion-label>{{it.apellidos}}</ion-label>
                 </ion-item>
               </ion-list>
-              <ion-button color = primary routerLink = "/client-nutri/tabs/new-client">
+              <ion-button
+                color="primary"
+                routerLink = "/client-nutri/tabs/new-client"
+              >
                 new Client
               </ion-button>
             </ion-card-content>

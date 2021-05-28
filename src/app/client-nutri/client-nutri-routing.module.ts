@@ -8,29 +8,19 @@ import { ClientNutriPage } from './client-nutri.page';
 const routes: Routes = [
   {
     path: 'tabs',
-    component: ClientNutriPage,
     children: [
+
       {
         path:'new-client',
         loadChildren: () => import('./new-client/new-client.module').then(m => m.NewClientPageModule)
       },
       {
-        path: ':clientId',
-        children: [
-          {
-            path:'',
-            loadChildren: () => import('./client-detail/client-detail.module').then(m => m.ClientDetailPageModule)
-          },
-          {
-            path:'new-evaluation',
-            loadChildren: () => import('./client-detail/new-evaluation/new-evaluation.module').then(m => m.NewEvaluationPageModule)
-          }
-        ]
+        path: 'client-detail/:clientId',
+        loadChildren: () => import('./client-detail/client-detail.module').then(m => m.ClientDetailPageModule)
       },
-
       {
         path: '',
-        redirectTo:'/client-nutri/tabs',
+        component: ClientNutriPage,
         pathMatch:'full'
       }
     ]
