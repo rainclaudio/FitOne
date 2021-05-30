@@ -15,8 +15,17 @@ const routes: Routes = [
         loadChildren: () => import('./new-client/new-client.module').then(m => m.NewClientPageModule)
       },
       {
-        path: 'client-detail/:clientId',
-        loadChildren: () => import('./client-detail/client-detail.module').then(m => m.ClientDetailPageModule)
+        path: 'client-detail',
+        children: [
+          {
+            path: ':id_client',
+            loadChildren: () => import('./client-detail/client-detail.module').then(m => m.ClientDetailPageModule)
+          },
+          {
+            path: 'new-evaluation/:id_client',
+            loadChildren: () => import('./client-detail/new-evaluation/new-evaluation.module').then(m => m.NewEvaluationPageModule)
+          }
+        ]
       },
       {
         path: '',
@@ -25,18 +34,6 @@ const routes: Routes = [
       }
     ]
   },
-  // {
-  //   path: 'client-detail',
-  //   loadChildren: () => import('./client-detail/client-detail.module').then( m => m.ClientDetailPageModule)
-  // },
-  // {
-  //   path: 'new-client',
-  //   loadChildren: () => import('./new-client/new-client.module').then( m => m.NewClientPageModule)
-  // },
-  // {
-  //   path: 'new-evaluation',
-  //   loadChildren: () => import('./new-evaluation/new-evaluation.module').then( m => m.NewEvaluationPageModule)
-  // },
   {
     path: '',
     redirectTo:'/client-nutri/tabs',

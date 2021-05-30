@@ -5,5 +5,243 @@
 </ion-header>
 
 <ion-content>
+  <form [formGroup]="form_med_basicas">
+    <ion-grid>
+      <ion-row>
+        <ion-col size-sm="6">
+          <ion-list>
+            <ion-item>
+              <ion-label position="floating">Peso Corporal</ion-label>
+              <!-- Number type input -->
+              <ion-input
+                type="number"
+                formControlName="peso_corporal"
+              ></ion-input>
+            </ion-item>
 
+            <ion-item>
+              <ion-label position="floating">Estatura Máxima</ion-label>
+              <ion-input
+                type="number"
+                formControlName="estatura_maxima"
+              ></ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-label position="floating">Estatura Sentado</ion-label>
+              <ion-input
+                type="number"
+                formControlName="estatura_sentado"
+              ></ion-input>
+            </ion-item>
+          </ion-list>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
+
+  <form [formGroup]="form_diametros">
+    <ion-grid>
+      <ion-row>
+        <ion-col size-sm="6">
+          <ion-list>
+            <ion-item>
+              <ion-label position="floating">Biacromial</ion-label>
+              <ion-input
+              type="number"
+              formControlName="biacromial"></ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-label position="floating">Biliocrestídeo</ion-label>
+              <ion-input
+                type="number"
+                formControlName="biliocrestideo"
+              ></ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-label position="floating">Toráxico</ion-label>
+              <ion-input
+              type="number"
+              formControlName="toraxico"></ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-label position="floating">Tórax antero-posterior</ion-label>
+              <ion-input
+                type="number"
+                formControlName="torax_anteroposterior"
+              ></ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-label position="floating">Húmero</ion-label>
+              <ion-input
+              type="number"
+              formControlName="humero"></ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-label position="floating">Fémur</ion-label>
+              <ion-input
+              type="number"
+              formControlName="femur"></ion-input>
+            </ion-item>
+          </ion-list>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
+
+  <form [formGroup]="form_perimetros">
+    <ion-grid>
+      <ion-row>
+        <ion-col size-sm="6">
+          <ion-list>
+            <ion-item>
+              <ion-label position="floating">Brazo relajado</ion-label>
+              <ion-input
+                type="number"
+
+                formControlName="brazo_relajado"
+              ></ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-label position="floating">Brazo flexionado</ion-label>
+              <ion-input
+                type="number"
+                formControlName="brazo_flexionado"
+              ></ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-label position="floating">Antebrazo</ion-label>
+              <ion-input
+              type="number"
+              formControlName="antebrazo"></ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-label position="floating">Cabeza</ion-label>
+              <ion-input
+              type="number"
+              formControlName="cabeza"></ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-label position="floating">Tórax</ion-label>
+              <ion-input
+              type="number"
+              formControlName="torax"></ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-label position="floating">Cintura</ion-label>
+              <ion-input
+              type="number"
+              formControlName="cintura"></ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-label position="floating">Cadera</ion-label>
+              <ion-input
+              type="number"
+               formControlName="cadera"></ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-label position="floating">Muslo máximo</ion-label>
+              <ion-input
+                type="number"
+                formControlName="muslo_maximo"
+              ></ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-label position="floating">Muslo medial</ion-label>
+              <ion-input
+                type="number"
+                formControlName="muslo_medial"
+              ></ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-label position="floating">Pantorrilla</ion-label>
+              <ion-input
+                type="number"
+                formControlName="pantorrilla"
+              ></ion-input>
+            </ion-item>
+          </ion-list>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
+
+  <form [formGroup]="form_pliegues">
+    <ion-grid>
+      <ion-row>
+        <ion-col size-sm="6">
+          <ion-list>
+            <ion-item>
+              <ion-label position="floating">Tríceps</ion-label>
+              <ion-input
+              type="number"
+              formControlName="triceps"></ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-label position="floating">Subescapular</ion-label>
+              <ion-input
+                type="number"
+                formControlName="subescapular"
+              ></ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-label position="floating">Supraespinal</ion-label>
+              <ion-input
+                type="number"
+                formControlName="supraespinal"
+              ></ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-label position="floating">Abdominal</ion-label>
+              <ion-input
+              type="number"
+               formControlName="abdominal"></ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-label position="floating">Muslo Anterior</ion-label>
+              <ion-input
+                type="number"
+                formControlName="muslo_anterior"
+              ></ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-label position="floating">Pantorrilla Medial</ion-label>
+              <ion-input
+                type="number"
+                formControlName="pantorrilla_medial"
+              ></ion-input>
+            </ion-item>
+          </ion-list>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
+
+  <ion-button
+    (click)="createResult()"
+    [disabled]="!form_med_basicas.valid || !form_diametros.valid || !form_perimetros.valid
+                || !form_pliegues.valid"
+  >
+    <ion-icon name="checkmark" slot="icon-only"></ion-icon>
+    Validar y visualizar
+  </ion-button>
 </ion-content>
