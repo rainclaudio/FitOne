@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { NewEvaluationPageRoutingModule } from './new-evaluation-routing.module';
 
 import { NewEvaluationPage } from './new-evaluation.page';
+import { ResultComponent } from './result/result.component';
 
 @NgModule({
   imports: [
@@ -16,6 +17,7 @@ import { NewEvaluationPage } from './new-evaluation.page';
     IonicModule,
     NewEvaluationPageRoutingModule
   ],
-  declarations: [NewEvaluationPage]
+  declarations: [NewEvaluationPage,ResultComponent],
+  entryComponents: [ResultComponent]
 })
 export class NewEvaluationPageModule {}

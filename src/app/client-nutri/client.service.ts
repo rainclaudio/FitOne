@@ -49,4 +49,11 @@ export class ClientService {
   getAllClients(){
     return [...this.clientVector];
   }
+  getClient(id_client: string){
+    return {
+      ...this.clientVector.find((client) => {
+        return client.id_client === id_client;
+      }),
+    };
+  }
 }

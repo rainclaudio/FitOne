@@ -1,0 +1,341 @@
+
+<ion-content>
+  <div id="htmlData" #htmlData>
+
+  <h1>Informe Nutricional</h1>
+  <!-- mediciones básicas -->
+  <table class="table table-bordered">
+    <thead>
+      <tr class="table-dagner">
+        <th>Mediciones Básicas</th>
+        <th>15/10/19</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">Peso corporal (kg)</th>
+        <td>{{v_medBasicas.peso_corporal}}</td>
+      </tr>
+      <tr>
+        <th scope="row">Estatura máxima (cm)</th>
+        <td>{{v_medBasicas.estatura_maxima}}</td>
+      </tr>
+      <tr>
+        <th scope="row">Estatura Sentado (cm)</th>
+        <td>{{v_medBasicas.estatura_sentado}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <!-- diametros -->
+  <table class="table table-bordered">
+    <thead>
+      <tr class="table-dagner">
+        <th>Diámetros (cm)</th>
+        <th>15/10/19</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">Biacromial</th>
+        <td>{{v_diametros.biacromial}}
+        </td>
+      </tr>
+      <tr>
+        <th scope="row">Biliocrestídeo</th>
+        <td>{{v_diametros.biliocrestideo}}</td>
+      </tr>
+      <tr>
+        <th scope="row">Toráxico</th>
+        <td>{{v_diametros.toraxico}}</td>
+      </tr>
+      <tr>
+        <th scope="row">Tórax antero-posterior</th>
+        <td>{{v_diametros.torax_anteroposterior}}</td>
+      </tr>
+      <tr>
+        <th scope="row">Húmero</th>
+        <td>{{v_diametros.humero}}</td>
+      </tr>
+      <tr>
+        <th scope="row">Fémur</th>
+        <td>{{v_diametros.femur}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <!-- perimetros -->
+  <table class="table table-bordered">
+    <thead>
+      <tr class="table-dagner">
+        <th>Perímetros (cm)</th>
+        <th>15/10/19</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">Brazo relajado</th>
+        <td>{{v_perimetros.brazo_relajado}}</td>
+      </tr>
+      <tr>
+        <th scope="row">Brazo flexionado</th>
+        <td>{{v_perimetros.brazo_flexionado}}</td>
+      </tr>
+      <tr>
+        <th scope="row">Antebrazo</th>
+        <td>{{v_perimetros.antebrazo}}</td>
+      </tr>
+      <tr>
+        <th scope="row">Cabeza</th>
+        <td>{{v_perimetros.cabeza}}</td>
+      </tr>
+      <tr>
+        <th scope="row">Tórax</th>
+        <td>{{v_perimetros.torax}}</td>
+      </tr>
+      <tr>
+        <th scope="row">Cintura</th>
+        <td>{{v_perimetros.cintura}}</td>
+      </tr>
+      <tr>
+        <th scope="row">Cadera</th>
+        <td>{{v_perimetros.cadera}}</td>
+      </tr>
+      <tr>
+        <th scope="row">Muslo máximo</th>
+        <td>{{v_perimetros.muslo_maximo}}</td>
+      </tr>
+      <tr>
+        <th scope="row">Muslo medial</th>
+        <td>{{v_perimetros.muslo_medial}}</td>
+      </tr>
+      <tr>
+        <th scope="row">Pantorrilla</th>
+        <td>{{v_perimetros.pantorrilla}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <!-- Pliegues -->
+  <table class="table table-bordered">
+    <thead>
+      <tr class="table-dagner">
+        <th>Pliegues (cm)</th>
+        <th>15/10/19</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">Tríceps</th>
+        <td>{{v_pliegues.triceps}}</td>
+      </tr>
+      <tr>
+        <th scope="row">Subescapular</th>
+        <td>{{v_pliegues.subescapular}}</td>
+      </tr>
+      <tr>
+        <th scope="row">Supraespinal</th>
+        <td>{{v_pliegues.supraespinal}}</td>
+      </tr>
+      <tr>
+        <th scope="row">Abdominal</th>
+        <td>{{v_pliegues.abdominal}}</td>
+      </tr>
+      <tr>
+        <th scope="row">Muslo Anterior</th>
+        <td>{{v_pliegues.muslo_anterior}}</td>
+      </tr>
+      <tr>
+        <th scope="row">Pantorrilla Medial</th>
+        <td>{{v_pliegues.pantorrilla_medial}}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- IMC IM/O  I A/M SUM(6PLIEGUES) -->
+  <table class="table table-bordered">
+    <thead>
+      <tr class="table-dagner">
+        <th></th>
+        <th>IMC</th>
+        <th>I M/O</th>
+        <th>I A/M</th>
+        <th>Sum(6 pliegues)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">15/10/19 Añadir Date</th>
+        <td>28,28 kg/m^2 Sobrepeso</td>
+        <td>4,3 Bueno</td>
+        <td>0,78 Aceptable</td>
+        <td>144</td>
+      </tr>
+      <tr>
+        <th scope="row">14/11/19</th>
+        <td>27,63 kg/m^2 Sobrepeso</td>
+        <td>4,68 Excelente</td>
+        <td>0.62 Aceptable</td>
+        <td>117</td>
+      </tr>
+    </tbody>
+  </table>
+  <!-- Composición corporal -->
+  <table class="table table-bordered">
+    <thead>
+      <tr class="table-dagner">
+        <th>Composición Corporal (en kg)</th>
+        <th>15/10/19</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">Adiposo</th>
+        <td>{{kg_masa_adiposa}}</td>
+      </tr>
+      <tr>
+        <th scope="row">muscular</th>
+        <td>{{kg_masa_muscular}}</td>
+      </tr>
+      <tr>
+        <th scope="row">Residual</th>
+        <td>{{kg_masa_residual}}</td>
+      </tr>
+      <tr>
+        <th scope="row">Óseo</th>
+        <td>{{kg_masa_osea}}</td>
+      </tr>
+      <tr>
+        <th scope = "row">Piel</th>
+        <td>{{kg_masa_piel}}</td>
+      </tr>
+      <!-- description: adiposo muscular residual óseo
+      <tr *ngFor="let it of Posts">
+        <th scope="row">it.description</th>
+        <td>it.result</td>
+      </tr> -->
+    </tbody>
+  </table>
+  <!-- Composición corporal porcentual -->
+  <table class="table table-bordered">
+    <thead>
+      <tr class="table-dagner">
+        <th>Composición Corporal (porcentual)</th>
+        <th>15/10/19</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- description: adiposo muscular residual óseo -->
+      <!-- <tr *ngFor="let it of Posts">
+        <th scope="row">it.description</th>
+        <td>(it.result * pesoCorporal) / 100</td>
+      </tr> -->
+    </tbody>
+  </table>
+  <!-- Inforamción adicional -->
+  <table class="table table-bordered">
+    <thead>
+      <tr class="table-dagner">
+        <th>Patologías o lesiones</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- description: MEDICAMENTOS: Agnotin (acné)
+       - DIGESTION Normal
+       ALERGIAS O INTOLERANCIAS: (-)
+                                No le gusta la palta
+      EJERCICIO O DEPORTE - OCPUACIÓN:
+      Gimnasio 5 días a la semana a las 12:00
+      1 hora y media pesas (2 días a la semana) y 1 hora de pesas y media de
+      cardio (3 días)
+      Lunes pierna
+      Martes espalda
+      Miércoles pecho
+      Jueves Brazos
+      Viernes hombros
+      Actividad Estudiante de ingenieria
+
+     -->
+      <!-- <tr *ngFor="let it of Posts">
+        <th scope="row">it.description</th>
+        <td>(it.result * pesoCorporal) / 100</td>
+      </tr> -->
+    </tbody>
+  </table>
+
+  <!-- Recordatorio 24 horas -->
+  <table class="table table-bordered">
+    <thead>
+      <tr class="table-dagner">
+        <th>Hora</th>
+        <th>Tiempo Comida</th>
+        <th>Alimentos</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- hora  -->
+      <!-- <tr *ngFor="let it of Posts">
+        <th scope="row">it.hora</th>
+        <td>it.description hora (br,alm,snak)</td>
+        <td>it.decription alimentos </td>
+      </tr> -->
+    </tbody>
+  </table>
+
+  <h2 style="color: blue;">Cálculo de requerimientos</h2>
+  <h6>Requerimiento energético: poner PESO META y calorías:<b>2000</b></h6>
+  <!-- MACROS -->
+  <table class="table table-bordered" style="text-align: center;">
+    <thead>
+      <tr class="table-dagner">
+        <th>Macronutriente</th>
+        <th>gr/kg de peso </th>
+        <th>gr/por día</th>
+        <th>Calorías</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- hora  -->
+      <!-- <tr *ngFor="let it of Posts">
+        <th scope="row">it.hora</th>
+        <td>it.macro (br,alm,snak)</td>
+        <td>it.número </td>
+        <td>it.calorías</td>
+      </tr> -->
+    </tbody>
+  </table>
+  <table class="table table-bordered">
+    <thead>
+      <tr class="table-dagner">
+        <th>Alimentos</th>
+        <th>Porciones</th>
+        <th>Calorías</th>
+        <th>CHO</th>
+        <th>Lípidos</th>
+        <th>Proteínas</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- hora  -->
+      <!-- <tr *ngFor="let it of Posts">
+        <th scope="row">it.hora</th>
+        <td>it.num</td>
+        <td>it.calorías </td>
+        <td>it.proteínas</td>
+        <td>lipidos</td>
+        <td>proteinas</td>
+      </tr> -->
+    </tbody>
+  </table>
+
+
+
+
+
+  </div>
+
+  <ion-button (click) = "onConfirmResult()">
+    Confirm
+  </ion-button>
+
+
+
+</ion-content>

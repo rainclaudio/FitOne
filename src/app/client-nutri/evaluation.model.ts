@@ -1,53 +1,68 @@
 
-export interface Inter_MedBasicas{
- id_medbasicas: string;
- peso_corporal: number;
- estatura_maxima:number;
- estatura_sentado: number;
- id_antropodata: string;
-}
-export interface Inter_Diametros{
-  id_diametros: string;
-  biacromial: number;
-  biliocretideo: number;
-  toraxico: number;
-  torax_anteroposterior: number;
-  humero: number;
-  femur: number;
-  id_antropodata: string;
-}
-export interface Inter_Perimetros{
-  id_perimetros: string;
-  brazo_relajado: number;
-  brazo_flexionado: number;
-  antebrazo: number;
-  cabeza: number;
-  torax: number;
-  cintura: number;
-  cadera: number;
-  muslo_maximo: number;
-  muslo_medial: number;
-  pantorrilla:number;
-  id_antropodata: string;
-}
-export interface Inter_Pliegues{
-  id_pliegues: string;
-  triceps: number;
-  subescapular: number;
-  supraespinal: number;
-  abdominal: number;
-  muslo_anterior: number;
-  pantorrilla_number;
-  id_antropodata: string;
+export class Inter_MedBasicas{
+ constructor(
+  public id_medbasicas: string,
+  public peso_corporal: number,
+  public estatura_maxima:number,
+  public estatura_sentado: number,
+  public id_antropodata: string
+ ){
 
+ }
 }
-export interface Inter_Indices{
-  id_indices: string;
-  indice_MasaCorporal: number;
-  indice_MuscularOseo: number;
-  indice_AdiposoMuscular: number;
-  indice_sumatoriaPliegues: number;
-  id_tResults: string;
+export class Inter_Diametros{
+  constructor(
+  public id_diametros: string,
+  public biacromial: number,
+  public biliocrestideo: number,
+  public toraxico: number,
+  public torax_anteroposterior: number,
+  public humero: number,
+  public femur: number,
+  public id_antropodata: string){
+
+  }
+}
+export class Inter_Perimetros{
+  constructor(
+  public  id_perimetros: string,
+  public  brazo_relajado: number,
+  public brazo_flexionado: number,
+  public antebrazo: number,
+  public cabeza: number,
+  public torax: number,
+  public cintura: number,
+  public cadera: number,
+  public muslo_maximo: number,
+  public muslo_medial: number,
+  public pantorrilla:number,
+  public id_antropodata: string
+  ){
+
+  }
+}
+export class Inter_Pliegues{
+  constructor(
+    public id_pliegues: string,
+    public triceps: number,
+    public subescapular: number,
+    public supraespinal: number,
+    public abdominal: number,
+    public muslo_anterior: number,
+    public pantorrilla_medial: number,
+    public id_antropodata: string){
+  }
+}
+export class Inter_Indices{
+  constructor(
+    public id_indices: string,
+    public indice_MasaCorporal: number,
+    public indice_MuscularOseo: number,
+    public indice_AdiposoMuscular: number,
+    public indice_sumatoriaPliegues: number,
+    public id_tResults: string){
+
+  }
 }
 export interface Inter_Composicion{
   id_composition: string;

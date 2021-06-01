@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { NavController } from '@ionic/angular';
+import { ModalController, NavController } from '@ionic/angular';
+import { ClientService } from '../../client.service';
+import { clientItem } from '../../clientItem.model';
+import { Inter_Antropodata, Inter_Diametros, Inter_Evaluation, Inter_Indices, Inter_Informe, Inter_MedBasicas, Inter_Perimetros, Inter_Pliegues, Inter_TotalResults } from '../../evaluation.model';
+import { ResultComponent } from './result/result.component';
 
 @Component({
   selector: 'app-new-evaluation',
@@ -10,19 +14,24 @@ import { NavController } from '@ionic/angular';
 })
 export class NewEvaluationPage implements OnInit {
   id_client: string;
+  clientitem: clientItem;
   form_med_basicas: FormGroup;
   form_diametros: FormGroup;
   form_perimetros: FormGroup;
   form_pliegues: FormGroup;
+
+
   constructor(private route: ActivatedRoute,
-    private navController: NavController) { }
-    createFormControl() {
+    private navController: NavController,
+    private clientService: ClientService,
+    private modalCtrl: ModalController) { }
+  createFormControl() {
       return new FormControl(null, {
         updateOn: 'blur',
         validators: [Validators.required],
       });
     }
-    createFormControl2(defaultValue: number) {
+  createFormControl2(defaultValue: number) {
       var form_control = new FormControl(null, {
         updateOn: 'blur',
         validators: [Validators.required],
@@ -38,6 +47,7 @@ export class NewEvaluationPage implements OnInit {
       }
       this.id_client = pmap.get('id_client');
       console.log(this.id_client);
+      this.clientitem = this.clientService.getClient(this.id_client);
 
       this.form_med_basicas = new FormGroup({
         peso_corporal: this.createFormControl2(76.6),
@@ -229,7 +239,6 @@ export class NewEvaluationPage implements OnInit {
     const peso_estructurado = this.getPesoEstructurado();
     return peso_estructurado - this.form_med_basicas.value.peso_corporal;
   }
-
   getAjustesCurrentMass(dif: number, currentPercent: number) {
     return dif * currentPercent;
   }
@@ -248,7 +257,6 @@ export class NewEvaluationPage implements OnInit {
       return;
     }
     const sum_pliegues = this.getSumPliegues();
-    const p_e = this.getPesoEstructurado();
     const dif = this.getDif_PE_PBr();
 
     const kg_masa_adiposa = this.getKgMasa_Component(
@@ -286,6 +294,31 @@ export class NewEvaluationPage implements OnInit {
         this.getPercentMasaPiel()
       )
     );
+
+    this.modalCtrl.create({
+      component: ResultComponent,
+      componentProps: {
+        clientItem: this.clientitem,
+        form_med_basicas: this.form_med_basicas,
+        form_diametros: this.form_diametros,
+        form_perimetros: this.form_perimetros,
+        form_pliegues: this.form_pliegues,
+        kg_masa_adiposa: kg_masa_adiposa,
+        kg_masa_muscular: kg_masa_muscular,
+        kg_masa_residual: kg_masa_residual,
+        kg_masa_osea: kg_masa_osea,
+        kg_masa_piel: kg_masa_piel
+      }
+    })
+    .then(modalEl => {
+      modalEl.present();
+      return modalEl.onDidDismiss();
+    })
+    .then(resultData => {
+      if(resultData.role === 'confirm'){
+        console.log('confirmed');
+      }
+    });
 
     console.log('kg masa adiposa1');
     console.log(kg_masa_adiposa);
