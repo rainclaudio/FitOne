@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { ClientService } from './client.service';
 import { clientItem } from './clientItem.model';
 
@@ -8,12 +9,17 @@ import { clientItem } from './clientItem.model';
   styleUrls: ['./client-nutri.page.scss'],
 })
 export class ClientNutriPage implements OnInit {
-  private copyClientVector: clientItem[] = [];
+  copyClientVector: clientItem[] = [];
+  private clientSub : Subscription;
   constructor(private clientService: ClientService) { }
 
   ngOnInit() {
-    this.copyClientVector  = this.clientService.getAllClients();
+    this.clientSub = this.clientService.clients.subscribe(clients => {
+      this.copyClientVector = clients;
+    });
   }
+
+
   getVectorCopy(){
     return [...this.copyClientVector];
   }

@@ -53,6 +53,7 @@ export class Inter_Pliegues{
     public id_antropodata: string){
   }
 }
+
 export class Inter_Indices{
   constructor(
     public id_indices: string,
@@ -64,32 +65,45 @@ export class Inter_Indices{
 
   }
 }
-export interface Inter_Composicion{
-  id_composition: string;
-  kg_adiposo: number;
-  kg_muscular: number;
-  kg_oseo: number;
-  kg_piel: number;
-  id_tResults: string;
+export class Inter_Composicion{
+  constructor(
+  public id_composition: string,
+  public kg_adiposo: number,
+  public kg_muscular: number,
+  public kg_oseo: number,
+  public kg_piel: number,
+  public id_tResults: string
+  ){
+
+  }
 }
-export interface Inter_TotalResults{
-  id_tResults: string;
-  id_evaluation: string;
+export class Inter_TotalResults{
+  constructor(
+    public id_tResults: string,
+    public id_evaluation: string
+  ){}
 }
 
-export interface Inter_Antropodata {
-  id_antropodata: string;
-  id_evaluation: string;
+export class Inter_Antropodata {
+  constructor(
+    public id_antropodata: string,
+    public id_evaluation: string
+  ){}
 }
-export interface  Inter_Evaluation{
-  id_evaluation: string;
-  id_informe: string;
+export class  Inter_Evaluation{
+  constructor(
+    public id_evaluation: string,
+    public id_informe: string
+  ){}
 }
-export interface Inter_Informe{
-  id_informe: string;
-  fecha_informe: Date;
-  // mejorar
-  meta: string;
-  // implementar id_requerimientos;
+export class Inter_Informe{
+  constructor(
+    public id_informe: string,
+    public fecha_informe: Date,
+    // mejorar
+    public meta: string,
+    public id_user: string
+    // implementar id_requerimientos;
+  ){}
 }
 

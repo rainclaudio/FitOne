@@ -1,8 +1,11 @@
-export interface clientItem{
-  id_client:string;
-  nombres: string;
-  apellidos: string;
-  telefono: number;
-  correo_electronico: string;
-  ocupacion: string;
+export class clientItem{
+  constructor(
+  public id_client:string,
+  public nombres: string,
+  public apellidos: string,
+  public telefono: number,
+  public correo_electronico: string,
+  public ocupacion: string
+  ){
+  }
 }

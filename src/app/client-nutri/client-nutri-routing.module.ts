@@ -38,7 +38,8 @@ const routes: Routes = [
     path: '',
     redirectTo:'/client-nutri/tabs',
     pathMatch: 'full'
-  }
+  },
+
 ];
 
 @NgModule({
