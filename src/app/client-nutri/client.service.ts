@@ -1,6 +1,7 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-import {take,map} from 'rxjs/operators';
+import { BehaviorSubject, Observable } from 'rxjs';
+import {take,map, switchMap, tap} from 'rxjs/operators';
 import { clientItem } from './clientItem.model';
 import {
   Inter_MedBasicas,
@@ -27,15 +28,19 @@ export class ClientService {
   private inter_indices = new BehaviorSubject<Inter_Indices[]>([]);
 
   private inter_antropodata = new BehaviorSubject<Inter_Antropodata[]>([]);
-  private inter_med_b = new BehaviorSubject<Inter_MedBasicas[]>([]);
+  private inter_med_basicas = new BehaviorSubject<Inter_MedBasicas[]>([]);
   private inter_diametros = new BehaviorSubject<Inter_Diametros[]> ([]);
   private inter_perimetros = new BehaviorSubject<Inter_Perimetros[]>([]);
   private inter_pliegues  =new BehaviorSubject<Inter_Pliegues[]>([]);
 
+  private last_id_info: string;
+  private last_id_ev: string;
+  private last_id_antr: string;
+  private last_id_result: string;
 
-
-
-  constructor() {
+  constructor(
+    private http: HttpClient
+  ) {
     const newClient = new clientItem(
       'cliente1',
       'Claudio Javier',
@@ -52,6 +57,12 @@ export class ClientService {
       'almendra@gmai.com',
       'estudiante Profesora'
     );
+    this.addClient(
+    'Almendra Anaís',
+    'Castillo Villaroel',
+    912334533,
+    'almendra@gmai.com',
+    'estudiante Profesora');
     this.clientVector.pipe(take(1)).subscribe(clients => {
       this.clientVector.next(clients.concat(newClient));
     });
@@ -78,6 +89,7 @@ export class ClientService {
     correo: string,
     ocupacion: string
   ){
+    let generatedId: string;
     const newClient = new clientItem(
       Math.random().toString(),
       nombres,
@@ -86,27 +98,89 @@ export class ClientService {
       correo,
       ocupacion,
     );
-    this.clientVector.pipe(take(1)).subscribe(client => {
-      this.clientVector.next(client.concat(newClient));
-    });
-  }
+    console.log("posting client");
+    return this.http.post(
+      'https://fit-one-3408c-default-rtdb.firebaseio.com/client-inf.json',
+      {
+        ...newClient,
+        id:null,
+      })
+      .pipe(
 
+        tap(resData => {
+          console.log(resData);
+        })
+        // switchMap(resData => {
+        //   generatedId = resData.name;
+        //   return this.clientVector;
+        // }),
+        // take(1),
+        // tap(clients => {
+        //   newClient.id_client = generatedId;
+        //   this.clientVector.next(clients.concat(newClient));
+        // })
+      );
+  }
+  publish_informe(classInforme: Inter_Informe){
+    console.log("hellow ahora estás aquí");
+    let generatedinfoid: string;
+    holis: Observable;
+
+    const holis = this.http.post<{name:string}>(
+      'https://fit-one-3408c-default-rtdb.firebaseio.com/Informe.json',
+      {
+        ...classInforme,
+        id_informe: null
+      }
+    ).pipe(
+      switchMap(resData => {
+        console.log(resData.name),
+        generatedinfoid = resData.name;
+        return this.inter_informe;
+      }),
+      take(1)
+    ).subscribe(info => {
+      console.log("generating");
+      this.inter_informe.next(info.concat(classInforme));
+    }
+    );
+    console.log("holitas: "+generatedinfoid);
+
+  }
   add_informe(
-    id_informe: string,
     fecha_informe: Date,
     meta:string,
     id_user: string
   ){
     const newInforme = new Inter_Informe(
-      id_informe,
+      'borrable',
       fecha_informe,
       meta,
       id_user
     );
-    this.inter_informe.pipe(take(1)).subscribe(informe => {
-      this.inter_informe.next(informe.concat(newInforme));
-    })
     console.table(this.inter_informe);
+    return this.http
+    .post<{name: string}>(
+      'https://fit-one-3408c-default-rtdb.firebaseio.com/Informe.json',
+      {
+        ...newInforme,
+        id_informe:null
+      })
+      .pipe(
+        switchMap(resData => {
+          console.log("estamos en informe"+resData.name);
+          this.last_id_info = resData.name;
+          return this.inter_informe;
+        }),
+        take(1),
+        tap(informe => {
+          newInforme.id_informe = this.last_id_info;
+          this.inter_informe.next(informe.concat(newInforme));
+        })
+      );
+  }
+  get flast_id_info(){
+    return this.last_id_info;
   }
   getInformes(id_client: string){
     return this.inter_informe.pipe(
@@ -121,61 +195,127 @@ export class ClientService {
       })
     );
   }
-  add_inter_Evaluation(
-    id_evaluation: string,
-    id_informe: string
-  ){
+  add_inter_Evaluation(){
     const newEvaluation = new  Inter_Evaluation(
-      id_evaluation,
-      id_informe
+      'borrable',
+      this.last_id_info,
     );
-    this.inter_evaluation.pipe(take(1)).subscribe(evaluation => {
-      this.inter_evaluation.next(evaluation.concat(evaluation));
-    });
+    return this.http
+    .post<{name: string}>(
+      'https://fit-one-3408c-default-rtdb.firebaseio.com/Evaluation.json',
+      {
+        ...newEvaluation,
+        id_evaluation:null
+      })
+      .pipe(
+        switchMap(resData => {
+          console.log("estamos en evaluation"+resData.name);
+          this.last_id_ev = resData.name;
+          return this.inter_evaluation;
+        }),
+        take(1),
+        tap(evaluation=> {
+          newEvaluation.id_evaluation= this.last_id_ev;
+          this.inter_evaluation.next(evaluation.concat(newEvaluation));
+        })
+      );
   }
-  add_antropodata(
-    id_antropodata: string,
-    id_evaluation: string
-  ){
+  get flast_id_ev(){
+    return this.last_id_ev;
+  }
+  add_antropodata(){
+    console.log("estamos en antropodata" + this.last_id_info);
     const newantropodata = new Inter_Antropodata(
-      id_antropodata,
-      id_evaluation
+      'borrable',
+      this.flast_id_ev
     );
-    this.inter_antropodata.pipe(take(1)).subscribe(antropodata => {
-      this.inter_antropodata.next(antropodata.concat(newantropodata));
-    });
+    return this.http
+    .post<{name: string}>(
+      'https://fit-one-3408c-default-rtdb.firebaseio.com/Antropodata.json',
+      {
+        ...newantropodata,
+        id_antropodata:null
+      })
+      .pipe(
+        switchMap(resData => {
+          console.log("estamos en antropodata"+resData.name);
+          this.last_id_antr = resData.name;
+          return this.inter_antropodata;
+        }),
+        take(1),
+        tap(antropodata=> {
+          newantropodata.id_antropodata= this.last_id_antr;
+          this.inter_antropodata.next(antropodata.concat(newantropodata));
+        })
+      );
   }
-  add_intertotalresults(
-    id_tResults:string,
-    id_evaluation: string
-  ){
+  add_intertotalresults(){
     const newtotal_results= new Inter_TotalResults(
-      id_tResults,
-      id_evaluation
+      'temporal',
+      this.flast_id_ev
     );
-    this.inter_total_result.pipe(take(1)).subscribe(results => {
-      this.inter_total_result.next(results.concat(newtotal_results));
-    })
+
+    return this.http
+    .post<{name: string}>(
+      'https://fit-one-3408c-default-rtdb.firebaseio.com/Resultado.json',
+      {
+        ...newtotal_results,
+        id_tResults:null
+      })
+      .pipe(
+        switchMap(resData => {
+          console.log("estamos en antropodata"+resData.name);
+          this.last_id_result= resData.name;
+          return this.inter_total_result;
+        }),
+        take(1),
+        tap(result=> {
+          newtotal_results.id_tResults = this.last_id_result;
+          this.inter_total_result.next(result.concat(newtotal_results));
+        })
+      );
   }
+
   add_interComposition(
-    id_composition:string,
-    kg_adiposo: number,
-    kg_muscular: number,
-    kg_oseo: number,
-    kg_piel: number,
-    id_tResults: string,
+    data: any,
+    option: string,
+    entityPost: string,
   ){
-    const newIntercomposition = new Inter_Composicion(
-      id_composition,
-      kg_adiposo,
-      kg_muscular,
-      kg_oseo,
-      kg_piel,
-      id_tResults
-    );
-    this.inter_composition.pipe(take(1)).subscribe(composition => {
-      this.inter_composition.next(composition.concat(newIntercomposition));
-    })
+    data.id_tResults = this.last_id_result;
+
+    let getid:string;
+    // `https://ionic-angular-course-d0193-default-rtdb.firebaseio.com/offered-places/${placeId}.json?auth=${fecthedToken}`,
+
+    return this.http
+    .post<{name: string}>(
+      `https://fit-one-3408c-default-rtdb.firebaseio.com/${entityPost}.json`,
+      {
+        ...data,
+        id:null,
+      })
+      .pipe(
+        switchMap(resData => {
+          console.log("estamos en pliegues"+resData.name);
+          getid = resData.name;
+          switch (option) {
+            case 'composition':return this.inter_composition;
+            default:
+              break;
+          }
+        }),
+        take(1),
+        tap(currentData=> {
+          data.id = getid;
+          switch (option) {
+            case 'composition':
+              this.inter_composition.next(currentData.concat(data));
+              break;
+
+            default:
+              break;
+          }
+        })
+      );
   }
   add_interindice(
     id_indice: string,
@@ -197,104 +337,157 @@ export class ClientService {
       this.inter_indices.next(indice.concat(newinterIndice));
     })
   }
-  add_interPliegues(
-    id_pliegues: string,
-    triceps: number,
-    subescapular: number,
-    supraespinal: number,
-    abdominal: number,
-    muslo_anterior: number,
-    pantorrilla_medial: number,
-    id_antropodata
+  add_interAntropodataInfo(
+    data: any,
+    option: string,
+    entityPost: string
   ){
-    const newinterpliegues = new Inter_Pliegues(
-      id_pliegues,
-      triceps,
-      subescapular,
-      supraespinal,
-      abdominal,
-      muslo_anterior,
-      pantorrilla_medial,
-      id_antropodata
-    );
-    this.inter_pliegues.pipe(take(1)).subscribe(pliegues =>{
-      this.inter_pliegues.next(pliegues.concat(newinterpliegues))
-    })
+    data.id_antropodata = this.last_id_antr;
+
+    let getid:string;
+    // `https://ionic-angular-course-d0193-default-rtdb.firebaseio.com/offered-places/${placeId}.json?auth=${fecthedToken}`,
+
+    return this.http
+    .post<{name: string}>(
+      `https://fit-one-3408c-default-rtdb.firebaseio.com/${entityPost}.json`,
+      {
+        ...data,
+        id:null,
+      })
+      .pipe(
+        switchMap(resData => {
+          getid = resData.name;
+          switch (option) {
+            case 'pliegue':return this.inter_pliegues;
+            case 'perimetro':return this.inter_perimetros;
+            case 'diametro':return this.inter_diametros;
+            case 'medbasica': return this.inter_med_basicas;
+            default:
+              break;
+          }
+        }),
+        take(1),
+        tap((currentData:any)=> {
+          data.id = getid;
+          switch (option) {
+            case 'pliegue':
+              this.inter_pliegues.next(currentData.concat(data));
+              break;
+            case 'perimetro':
+              this.inter_perimetros.next(currentData.concat(data));
+              break;
+            case 'diametro':
+              this.inter_diametros.next(currentData.concat(data));
+              break;
+            case 'medbasica':
+             this.inter_med_basicas.next(currentData.concar(data));
+             break;
+            default:
+              break;
+          }
+        })
+      );
+  }
+  add_interPliegues(
+   newinterpliegues: Inter_Pliegues
+  ){
+    newinterpliegues.id_antropodata = this.last_id_antr;
+    let idpliegue:string;
+    return this.http
+    .post<{name: string}>(
+      'https://fit-one-3408c-default-rtdb.firebaseio.com/Pliegue.json',
+      {
+        ...newinterpliegues,
+        id:null,
+      })
+      .pipe(
+        switchMap(resData => {
+          console.log("estamos en pliegues"+resData.name);
+          idpliegue = resData.name;
+          return this.inter_pliegues;
+        }),
+        take(1),
+        tap(pliegues=> {
+          newinterpliegues.id= idpliegue;
+          this.inter_pliegues.next(pliegues.concat(newinterpliegues));
+        })
+      );
   }
   add_interperimetros(
-     id_perimetros: string,
-     brazo_relajado: number,
-    brazo_flexionado: number,
-    antebrazo: number,
-    cabeza: number,
-    torax: number,
-    cintura: number,
-    cadera: number,
-    muslo_maximo: number,
-    muslo_medial: number,
-    pantorrilla:number,
-    id_antropodata: string
+    interperimetros: Inter_Perimetros
   ){
-    const interperimetros = new Inter_Perimetros(
-      id_perimetros,
-      brazo_relajado,
-     brazo_flexionado,
-     antebrazo,
-     cabeza,
-     torax,
-     cintura,
-     cadera,
-     muslo_maximo,
-     muslo_medial,
-     pantorrilla,
-     id_antropodata
-    );
-    this.inter_perimetros.pipe(take(1)).subscribe(perimetros => {
-      this.inter_perimetros.next(perimetros.concat(interperimetros));
-    });
+    interperimetros.id_antropodata = this.last_id_antr;
+    let id_perimetro: string;
+    return this.http
+    .post<{name: string}>(
+      'https://fit-one-3408c-default-rtdb.firebaseio.com/Perimetro.json',
+      {
+        ...interperimetros,
+        id:null,
+      })
+      .pipe(
+        switchMap(resData => {
+          console.log("estamos en pliegues"+resData.name);
+          id_perimetro = resData.name;
+          return this.inter_perimetros;
+        }),
+        take(1),
+        tap(perimetro=> {
+          interperimetros.id = id_perimetro;
+          this.inter_perimetros.next(perimetro.concat(interperimetros));
+        })
+      );
   }
-add_interdiametros(
- id_diametros: string,
- biacromial: number,
- biliocrestideo: number,
- toraxico: number,
- torax_anteroposterior: number,
- humero: number,
- femur: number,
- id_antropodata: string
+  add_interdiametros(
+ newDiametro: Inter_Diametros
 ){
-  const interDiametros = new Inter_Diametros(
-    id_diametros,
-    biacromial,
-    biliocrestideo,
-    toraxico,
-    torax_anteroposterior,
-    humero,
-    femur,
-    id_antropodata
-  );
-  this.inter_diametros.pipe(take(1)).subscribe(diametros => {
-    this.inter_diametros.next(diametros.concat(interDiametros));
-  });
-}
-add_interMedBasicas(
-  id_medbasicas: string,
-  peso_corporal: number,
-  estatura_maxima:number,
-  estatura_sentado: number,
-  id_antropodata: string
+  newDiametro.id_antropodata = this.last_id_antr;
+  let id_diametro: string;
+  return this.http
+  .post<{name: string}>(
+    'https://fit-one-3408c-default-rtdb.firebaseio.com/Diametro.json',
+    {
+      ...newDiametro,
+      id_diametros:null,
+    })
+    .pipe(
+      switchMap(resData => {
+        console.log("estamos en pliegues"+resData.name);
+        id_diametro = resData.name;
+        return this.inter_diametros;
+      }),
+      take(1),
+      tap(perimetro=> {
+        newDiametro.id = id_diametro;
+        this.inter_diametros.next(perimetro.concat(newDiametro));
+      })
+    );
+  }
+  add_interMedBasicas(
+  intermedbasicas: Inter_MedBasicas
 ){
-  const interMedBasicas = new Inter_MedBasicas(
-    id_medbasicas,
-    peso_corporal,
-    estatura_maxima,
-    estatura_sentado,
-    id_antropodata
-  );
-  this.inter_med_b.pipe(take(1)).subscribe(medb => {
-    this.inter_med_b.next(medb.concat(interMedBasicas));
-  })
-}
+  intermedbasicas.id_antropodata = this.last_id_antr;
+  let id_medb: string;
+  return this.http
+  .post<{name: string}>(
+    'https://fit-one-3408c-default-rtdb.firebaseio.com/MedicionBasica.json',
+    {
+      ...intermedbasicas,
+      id_medbasicas:null,
+    })
+    .pipe(
+      switchMap(resData => {
+        console.log("estamos en pliegues"+resData.name);
+        id_medb = resData.name;
+        return this.inter_med_basicas;
+      }),
+      take(1),
+      tap(medb=> {
+        intermedbasicas.id= id_medb;
+        this.inter_med_basicas.next(medb.concat(intermedbasicas));
+      })
+    );
+  }
 }
 
 

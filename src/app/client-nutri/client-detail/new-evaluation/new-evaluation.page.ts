@@ -7,7 +7,18 @@ import { ClientService } from '../../client.service';
 import { clientItem } from '../../clientItem.model';
 
 import { ResultComponent } from './result/result.component';
-
+import {
+  Inter_MedBasicas,
+  Inter_Diametros,
+  Inter_Perimetros,
+  Inter_Pliegues,
+  Inter_Indices,
+  Inter_Composicion,
+  Inter_TotalResults,
+  Inter_Antropodata,
+  Inter_Evaluation,
+  Inter_Informe,
+} from '../../evaluation.model';
 @Component({
   selector: 'app-new-evaluation',
   templateUrl: './new-evaluation.page.html',
@@ -326,43 +337,29 @@ export class NewEvaluationPage implements OnInit {
       .then((resultData) => {
         if (resultData.role === 'confirm') {
           const id_evaluation = Math.random().toString();
-          const id_informe = Math.random().toString();
           const id_antropodata = Math.random().toString();
           const id_tResults = Math.random().toString();
           var v1 = new Date();
           const today = v1.getDate();
 
-          this.clientService.add_informe(
-            id_informe,
+          const interInforme = new Inter_Informe(
+            'temporal',
             new Date(today),
             'bajar de peso',
-            this.id_client
+            this.id_client,
           );
-          this.clientService.add_inter_Evaluation(id_evaluation, id_informe);
-          this.clientService.add_antropodata(id_antropodata, id_evaluation);
-          this.clientService.add_intertotalresults(id_tResults, id_evaluation);
-
-          this.clientService.add_interComposition(
-            Math.random().toString(),
-            kg_masa_adiposa,
-            kg_masa_muscular,
-            kg_masa_osea,
-            kg_masa_piel,
-            id_tResults
-          );
-          //AGREGAR INDICES AGREGAR INDICES
-          this.clientService.add_interPliegues(
-            Math.random().toString(),
+          const interPliegues = new Inter_Pliegues(
+            'temporal',
             this.form_pliegues.value.triceps,
             this.form_pliegues.value.subescapular,
             this.form_pliegues.value.supraespinal,
             this.form_pliegues.value.abdominal,
             this.form_pliegues.value.muslo_anterior,
             this.form_pliegues.value.pantorrilla_medial,
-            id_antropodata
+            'temporal'
           );
-          this.clientService.add_interperimetros(
-            Math.random().toString(),
+          const interPerimetros = new Inter_Perimetros(
+           'temporal',
             this.form_perimetros.value.brazo_relajado,
             this.form_perimetros.value.brazo_flexionado,
             this.form_perimetros.value.antebrazo,
@@ -374,25 +371,69 @@ export class NewEvaluationPage implements OnInit {
             this.form_perimetros.value.muslo_maximo,
             this.form_perimetros.value.muslo_medial,
             this.form_perimetros.value.pantorrilla,
-            id_antropodata,
+            'temporal',
           );
-          this.clientService.add_interdiametros(
-            Math.random().toString(),
+          const interDiametros = new Inter_Diametros(
+            'temporal',
             this.form_diametros.value.biacromial,
             this.form_diametros.value.biliocrestideo,
             this.form_diametros.value.toraxico,
             this.form_diametros.value.torax_anteroposterior,
             this.form_diametros.value.humero,
             this.form_diametros.value.femur,
-            id_antropodata
+            'temporal'
           );
-          this.clientService.add_interMedBasicas(
-            Math.random().toString(),
+          const interMedbasicas = new Inter_MedBasicas(
+            'temporal',
             this.form_med_basicas.value.peso_corporal,
             this.form_med_basicas.value.estatura_maximo,
             this.form_med_basicas.value.estatura_sentado,
-            id_antropodata
+            'temporal'
           );
+          const composition = new Inter_Composicion(
+            'temporal',
+            kg_masa_adiposa,
+            kg_masa_muscular,
+            kg_masa_osea,
+            kg_masa_piel,
+            'temporal'
+          );
+          // this.clientService.publish_informe(interInforme);
+          this.clientService.add_informe(
+            new Date(today),
+            'bajar de peso',
+            this.id_client
+          ).subscribe(() => {
+             this.clientService.add_inter_Evaluation(
+             ).subscribe(() => {
+              this.clientService.add_antropodata(
+              ).subscribe(() => {
+                console.log("Ahora insertamos pliegues");
+
+                this.clientService.add_interPliegues(interPliegues).subscribe(() => {
+                });
+                this.clientService.add_interperimetros(interPerimetros).subscribe(() => {
+                });
+                this.clientService.add_interdiametros(interDiametros).subscribe(() => {
+                });
+                this.clientService.add_interMedBasicas(interMedbasicas).subscribe(() => {
+
+                });
+              });
+              this.clientService.add_intertotalresults().subscribe(()=>{
+                this.clientService.add_interComposition(composition,'composition','Composicion').subscribe(()=> {
+
+                });
+
+              });
+            });
+             console.log("haora qué:  " + this.clientService.flast_id_ev );
+          });
+
+
+
+          //AGREGAR INDICES AGREGAR INDICES
+
           this.resetForms();
           this.router.navigate(['/client-nutri/tabs/client-detail/' + this.id_client]);
           console.log('confirmed');

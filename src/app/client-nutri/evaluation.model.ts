@@ -1,7 +1,7 @@
 
 export class Inter_MedBasicas{
  constructor(
-  public id_medbasicas: string,
+  public id: string,
   public peso_corporal: number,
   public estatura_maxima:number,
   public estatura_sentado: number,
@@ -12,7 +12,7 @@ export class Inter_MedBasicas{
 }
 export class Inter_Diametros{
   constructor(
-  public id_diametros: string,
+  public id: string,
   public biacromial: number,
   public biliocrestideo: number,
   public toraxico: number,
@@ -25,7 +25,7 @@ export class Inter_Diametros{
 }
 export class Inter_Perimetros{
   constructor(
-  public  id_perimetros: string,
+  public  id: string,
   public  brazo_relajado: number,
   public brazo_flexionado: number,
   public antebrazo: number,
@@ -43,7 +43,7 @@ export class Inter_Perimetros{
 }
 export class Inter_Pliegues{
   constructor(
-    public id_pliegues: string,
+    public id: string,
     public triceps: number,
     public subescapular: number,
     public supraespinal: number,
@@ -56,7 +56,7 @@ export class Inter_Pliegues{
 
 export class Inter_Indices{
   constructor(
-    public id_indices: string,
+    public id: string,
     public indice_MasaCorporal: number,
     public indice_MuscularOseo: number,
     public indice_AdiposoMuscular: number,
@@ -67,7 +67,7 @@ export class Inter_Indices{
 }
 export class Inter_Composicion{
   constructor(
-  public id_composition: string,
+  public id: string,
   public kg_adiposo: number,
   public kg_muscular: number,
   public kg_oseo: number,
