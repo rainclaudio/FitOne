@@ -102,8 +102,15 @@ export class Inter_Informe{
     public fecha_informe: Date,
     // mejorar
     public meta: string,
-    public id_user: string
+    public id_user: string,
+    // public id_nutri: string
     // implementar id_requerimientos;
   ){}
+}
+export interface InformeData{
+   fecha_informe: string;
+  // mejorar
+  meta: string;
+  id_user: string;
 }
 

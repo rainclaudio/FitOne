@@ -14,6 +14,7 @@ import {
   Inter_Antropodata,
   Inter_Evaluation,
   Inter_Informe,
+  InformeData,
 } from './evaluation.model';
 
 @Injectable({
@@ -182,16 +183,40 @@ export class ClientService {
   get flast_id_info(){
     return this.last_id_info;
   }
-  getInformes(id_client: string){
-    return this.inter_informe.pipe(
-      take(1),
-      map(informe => {
-        const interInformes = [];
-        for(const key in informe){
-          if(informe.hasOwnProperty(key)){
 
+  get Informes(){
+    return this.inter_informe.asObservable();
+  }
+  fetch_Informes(id_user: string){
+
+    // no podemos usar inter_informe porque la infromación que obtenemos de informe data
+    // no es la misma que interinforme, por ejemplo dates se almacenan en forma de strings
+    // y la id tenemos que obtenerla de forma manual
+    return this.http
+    .get<{ [key: string]: InformeData }>(
+      `https://fit-one-3408c-default-rtdb.firebaseio.com/Informe.json?orderBy="id_user"&equalTo="${
+        id_user
+      }"`
+    )
+    .pipe(
+      map(informeData => {
+        const informe = [];
+        for (const key in informeData) {
+          if (informeData.hasOwnProperty(key)) {
+            informe.push(
+              new Inter_Informe(
+                key,
+                new Date(informeData[key].fecha_informe),
+                 informeData[key].meta,
+                informeData[key].id_user
+              )
+            );
           }
         }
+        return informe;
+      }),
+      tap(informes => {
+        this.inter_informe.next(informes);
       })
     );
   }

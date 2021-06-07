@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
@@ -19,7 +19,7 @@ import {
   templateUrl: './client-detail.page.html',
   styleUrls: ['./client-detail.page.scss'],
 })
-export class ClientDetailPage implements OnInit {
+export class ClientDetailPage implements OnInit,OnDestroy {
   id_client:string;
   private clientInformes: Inter_Informe[] = [];
   private informeSub: Subscription;
@@ -34,9 +34,22 @@ export class ClientDetailPage implements OnInit {
         return;
       }
       this.id_client = pmap.get('id_client');
+      this.informeSub = this.clientService.Informes.subscribe(informes => {
+        this.clientInformes = informes;
+      });
       console.log(this.id_client);
     }));
-
+  }
+  ngOnDestroy(){
+    if(this.informeSub){
+      this.informeSub.unsubscribe();
+    }
+  }
+  ionViewWillEnter(){
+    this.clientService.fetch_Informes(this.id_client).subscribe(   );
+  }
+  get Informes(){
+    return this.clientInformes;
   }
   get client(){
     return this.id_client;
