@@ -347,6 +347,7 @@ export class NewEvaluationPage implements OnInit {
             new Date(today),
             'bajar de peso',
             this.id_client,
+            'temporal'
           );
           const interPliegues = new Inter_Pliegues(
             'temporal',
@@ -404,6 +405,7 @@ export class NewEvaluationPage implements OnInit {
             'bajar de peso',
             this.id_client
           ).subscribe(() => {
+            console.log("SUBSCRIBING INFORME - NEW EVALUATION FUNCTION");
              this.clientService.add_inter_Evaluation(
              ).subscribe(() => {
               this.clientService.add_antropodata(
@@ -427,7 +429,6 @@ export class NewEvaluationPage implements OnInit {
 
               });
             });
-             console.log("haora qué:  " + this.clientService.flast_id_ev );
           });
 
 

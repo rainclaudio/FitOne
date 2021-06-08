@@ -103,6 +103,7 @@ export class Inter_Informe{
     // mejorar
     public meta: string,
     public id_user: string,
+    public id_nutri: string
     // public id_nutri: string
     // implementar id_requerimientos;
   ){}
@@ -112,5 +113,6 @@ export interface InformeData{
   // mejorar
   meta: string;
   id_user: string;
+  id_nutri: string;
 }
 
