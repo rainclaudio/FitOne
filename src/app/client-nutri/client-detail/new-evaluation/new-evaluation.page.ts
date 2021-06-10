@@ -399,8 +399,10 @@ export class NewEvaluationPage implements OnInit {
             kg_masa_piel,
             'temporal'
           );
-          // this.clientService.publish_informe(interInforme);
-          this.clientService.add_informe(
+          this.clientService.publish_informe(interInforme).subscribe(() => {
+
+          });
+        /*  this.clientService.add_informe(
             new Date(today),
             'bajar de peso',
             this.id_client
@@ -429,7 +431,7 @@ export class NewEvaluationPage implements OnInit {
 
               });
             });
-          });
+          });*/
 
 
 

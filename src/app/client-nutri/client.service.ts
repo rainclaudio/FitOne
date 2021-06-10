@@ -1,6 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
+import {
+  AngularFirestore,
+  AngularFirestoreDocument,
+} from '@angular/fire/firestore';
 import { take, map, switchMap, tap } from 'rxjs/operators';
 import { AuthService } from '../auth/auth.service';
 import { clientItem } from './clientItem.model';
@@ -40,7 +44,8 @@ export class ClientService {
   private last_id_antr: string;
   private last_id_result: string;
 
-  constructor(private http: HttpClient, private authService: AuthService) {
+  constructor(private http: HttpClient, private authService: AuthService,
+    private firestore: AngularFirestore) {
     const newClient = new clientItem(
       'cliente1',
       'Claudio Javier',
@@ -122,31 +127,54 @@ export class ClientService {
         // })
       );
   }
-  publish_informe(classInforme: Inter_Informe) {
-    console.log('hellow ahora estás aquí');
-    let generatedinfoid: string;
-    holis: Observable;
-
-    const holis = this.http
-      .post<{ name: string }>(
-        'https://fit-one-3408c-default-rtdb.firebaseio.com/Informe.json',
-        {
-          ...classInforme,
-          id_informe: null,
+  publish_informe(classInforme: any) {
+    console.log("PUBLISHING INFORME");
+    let fetchedUserId: string;
+    return this.authService.userId.pipe(
+      take(1),
+      switchMap((userId) => {
+        if (!userId) {
+          throw new Error('no user id found');
         }
-      )
-      .pipe(
-        switchMap((resData) => {
-          console.log(resData.name), (generatedinfoid = resData.name);
-          return this.inter_informe;
-        }),
-        take(1)
-      )
-      .subscribe((info) => {
-        console.log('generating');
+        fetchedUserId = userId;
+        return this.authService.token;
+      }),
+      take(1),
+      switchMap((token) => {
+          classInforme.id_nutri = fetchedUserId;
+          const dataTo_send =  {
+             fecha_informe: classInforme.fecha_informe,
+             meta: classInforme.meta,
+             id_user: classInforme.id_user,
+             id_nutri: classInforme.id_nutri
+          }
+          return this.firestore
+          .collection('Informe')
+           // .add<{ name: string }>({ ...classInforme, id_informe: null }); // no se puede hacer eso
+          .add(dataTo_send);
+      }),
+      switchMap((resData) => {
+        this.last_id_info = resData.id;
+        return this.inter_informe.asObservable();
+      }),
+      take(1),
+      tap(info => {
+        classInforme.id_informe = this.last_id_info;
+        console.log("class INFORME: ");
+        console.log(classInforme);
         this.inter_informe.next(info.concat(classInforme));
-      });
-    console.log('holitas: ' + generatedinfoid);
+      })
+    );
+      // .pipe(
+      //   switchMap((resData) => {
+      //     console.log('INFORME' + resData);
+      //     // this.last_id_antr = resData.name;
+      //     return this.inter_antropodata;
+      //   });
+      // );;
+    // necesito la id de este informe: investigar un método para conseguirla
+    // cómo hago un override de la id_informe a null: funciona la de arriba??
+    // si firestore retorna un observable significa que puedo obtener el id_del objeto publicado?
   }
   add_informe(fecha_informe: Date, meta: string, id_user: string) {
     console.log("CLIENT SERVICE - ADDING INFORME FUNCTION");
@@ -208,6 +236,57 @@ export class ClientService {
   get Informes() {
     return this.inter_informe.asObservable();
   }
+  fetch_Informes2(id_user:string){
+    let fetchedUserId: string;
+    // no podemos usar inter_informe porque la infromación que obtenemos de informe data
+    // no es la misma que interinforme, por ejemplo dates se almacenan en forma de strings
+    // y la id tenemos que obtenerla de forma manual
+    return this.authService.userId.pipe(
+      take(1),
+      switchMap((userId) => {
+        if (!userId) {
+          throw new Error('User not found');
+        }
+        fetchedUserId = userId;
+        return this.authService.token
+      }),
+      take(1),
+      switchMap((token) => {
+        return this.firestore.collection('Informe', ref => ref.where('id_nutri','==',fetchedUserId).where('id_user','==',id_user)).snapshotChanges();
+      }),
+      map((informeData) => {
+        const informe = [];
+
+        informeData.forEach((informeData) => {
+          var varinfo = {
+            id: informeData.payload.doc.id,
+            data: informeData.payload.doc.data()
+          }
+          informe.push(varinfo);
+        });
+        return informe;
+      }),
+      tap((informes) => {
+        const answer = [];
+        console.log("forma final");
+        if(informes.length!==0){
+          for(let it of informes ){
+            answer.push( new Inter_Informe(
+              it.id,
+              it.data.fecha_informe.toDate(),
+              it.data.meta,
+              it.data.id_user,
+              it.data.id_nutri
+            ));
+            console.log(it.id);
+            console.log(it.data.fecha_informe.toDate());
+            console.log(it.data.id_user);
+          }
+        }
+       this.inter_informe.next(answer);
+      })
+    );
+  }
   fetch_Informes(id_user: string) {
     let fetchedUserId: string;
     // no podemos usar inter_informe porque la infromación que obtenemos de informe data
@@ -256,6 +335,7 @@ export class ClientService {
       })
     );
   }
+
   add_inter_Evaluation() {
     const newEvaluation = new Inter_Evaluation('borrable', this.last_id_info);
     return this.http

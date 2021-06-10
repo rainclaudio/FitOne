@@ -46,7 +46,7 @@ export class ClientDetailPage implements OnInit,OnDestroy {
     }
   }
   ionViewWillEnter(){
-    this.clientService.fetch_Informes(this.id_client).subscribe(   );
+    this.clientService.fetch_Informes2(this.id_client).subscribe( );
   }
   get Informes(){
     return this.clientInformes;
